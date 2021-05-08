@@ -27,7 +27,77 @@ def remove_empty(entryList):
                 break
     return liste
 
+# Gets indexes of changed words with levenshtein matrix
+# INPUT List[List]
+# OUTPUT List[Int]
+def get_indexes(matrics):
+    res = []
 
+    l1 = len(matrics)
+    l2 = len(matrics[0])
+
+    i = l1 - 1
+    j = l2 - 1
+
+    right_reached = False
+    top_reached = False
+
+    minimum = 0
+
+    while(i>0 and j>0):
+        if(i == 0):
+            right_reached = True
+        if(j==0):
+            top_reached = True
+
+        if((not top_reached) and (not right_reached)):
+            minimum = min(matrics[i-1][j], matrics[i][j-1], matrics[i-1][j-1])
+        elif(top_reached and (not right_reached)):
+            minimum = min(matrics[i-1][j], matrics[i-1][j-1])
+        elif((not top_reached) and right_reached):
+            minimum = min(matrics[i][j-1], matrics[i-1][j-1])
+        else:
+            minimum = matrics[0][0]
+
+
+        if(minimum < matrics[i][j]):
+            res.append(j)
+
+        if(right_reached):
+            j -= 1
+        if(top_reached):
+            i -= 1
+        else:
+            if(minimum == matrics[i-1][j]):
+                i -= 1
+            elif(minimum == matrics[i][j-1]):
+                j -= 1
+            elif(minimum == matrics[i-1][j-1]):
+                i -= 1
+                j -= 1
+            else:
+                print("FATAL ERROR IN GET_INDEXES")
+                return -1
+    return res
+
+
+def calculate_WED(phrase1, phrase2):
+    indexes = []
+    res_sum = 0
+
+    list1 = (remove_empty(extract_skeleton(phrase1).split(" ")))
+    list2 = (remove_empty(extract_skeleton(phrase2).split(" ")))
+
+    tab = calculate_distance(list1, list2)
+    distance = tab[0]
+    indexes = tab[1]
+    print(distance)
+    print(indexes)
+    for i in range(distance):
+        res_sum += 1/(1+math.exp(indexes[i] + mu))
+    return res_sum
+
+######################################
 # Skeleton extractor : 
 # INPUT : String : 1 sentence 
 # OUTPUT : String : Skeleton of this sentence
