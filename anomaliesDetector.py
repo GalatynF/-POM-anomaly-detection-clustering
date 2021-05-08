@@ -3,6 +3,8 @@ import re
 ## TOOL ##
 
 #Removes empty items in list
+# INPUT : List
+# OUTPUT : List
 def remove_empty(entryList):
     liste = entryList
     changed = True
@@ -26,8 +28,8 @@ def extract_skeleton(phrase):
     return(re.sub(pattern, "", phrase))
 
 # DistanceCalculator (levenshtein distance): 
-# INPUT : 2 sentences skeletons (strings)
-# OUTPUT : Distance
+# INPUT : String, String : 2 sentences skeletons
+# OUTPUT : Int : Distance
 def calculate_distance(phrase1, phrase2):
     l1 = len(phrase1)
     l2 = len(phrase2)
