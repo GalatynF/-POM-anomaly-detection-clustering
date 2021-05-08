@@ -1,15 +1,32 @@
 import re
 
+## TOOL ##
+
+#Removes empty items in list
+def remove_empty(entryList):
+    liste = entryList
+    changed = True
+    while(changed):
+        changed = False
+        length = len(liste)
+        for i in range (length):
+            if liste[i] == '':
+                del liste[i]
+                changed = True
+                break
+    return liste
+
+
 # Skeleton extractor : 
-# INPUT : 1 sentence 
-# OUTPUT : Skeleton of this sentence
+# INPUT : String : 1 sentence 
+# OUTPUT : String : Skeleton of this sentence
 def extract_skeleton(phrase):
     # Remove digits and points, or suites of slashes followed by characters that are not spaces
     pattern = r'([\d.])|((/[^ ]+)+)'
     return(re.sub(pattern, "", phrase))
 
-# DistanceCalculator : 
-# INPUT : 2 sentences
+# DistanceCalculator (levenshtein distance): 
+# INPUT : 2 sentences skeletons (strings)
 # OUTPUT : Distance
 
 # Class cluster : 
