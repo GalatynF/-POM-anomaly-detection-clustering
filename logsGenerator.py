@@ -2,14 +2,14 @@ import sys
 import random
 import os
 import math 
+import json
 
 class logs:
     '''Logs contient la phrase et sa fréquence d'apparition'''
 
-    def __init__(self, skeleton, variance, freq = 0):
+    def __init__(self, skeleton, variance):
         self.skeleton = skeleton
         self.variance = variance
-        self.freq = freq
         self.random()
 
     def random(self): 
@@ -31,14 +31,30 @@ class logs:
         self.sentence = filling_skeleton
 
 
+def choose_skeleton(data):
+    while True : 
+        rand = str(random.randrange(1, len(data)+1))
+        freq = data['sk_'+rand]['freq']
+        rand_test = random.randrange(0, 100)
+        if rand_test < freq: 
+            break
+    skeleton = data['sk_'+rand]['sk']
+    vari = data['sk_'+rand]['variance']
+    log = logs(skeleton, vari)
+    return log.sentence
+
+
 def filling(path, f_size):
 
     if os.path.exists(path):
         f = open(path, 'w')
 
+        json_file = open("./skeletons.json", 'r')
+        data = json.load(json_file)
+
         s = 0
         while s < f_size : 
-            msg = "ok"+"\n" # TODO : generate rand log 
+            msg = choose_skeleton(data)+'\n'
             f.write(msg)
             s += len(msg)
 
@@ -53,22 +69,26 @@ def filling(path, f_size):
 
 if __name__ == "__main__":
     
-    global_size = int(sys.argv[1])     # sys.argv[1] = quantité de log généré en Mo
-    nb_file = int(sys.argv[2])           # sys.argv[2] = nombre de fichiers différents
+    global_size = int(sys.argv[1])     # sys.argv[1] = quantité de log généré en octets
 
-    # firstLog = logs("____ Jambon ____", [["le", "la"],["est bon", "n'est pas bon"]], 12)
-    # print(firstLog.skeleton)
+    if len(sys.argv) == 2 :
+        nb_file = 1
+    else : 
+        nb_file = int(sys.argv[2])           # sys.argv[2] = nombre de fichiers différents
+
+    ## Example usage ##
+
+    #skeleton = "____ Skeleton exemple ____" # ____ will be replace by one element in the variance
+    # variance = [
+    #     ["Fisrt", "Second", "Third"],
+    #     ["is good.", "is bad."]
+    # ]
+
+    # firstLog = logs(skeleton, variance)
     # print(firstLog.sentence)
-    # print("///////////////")
 
-    # tab = []
-    
-    # vari = [["[192.168.45.12]","[192.168.75.8]","[192.174.32.154]"],["update()","upgrade()","upload()","createaAccount()","login()","logout()"]]
 
-    # for i in range(10): 
-    #    tab.append(logs("____ TCP job name ____", vari, 10))
-    #    print(tab[i].sentence)
-
+    ###################
 
     # Directory generation
     if not os.path.isdir("generated"):

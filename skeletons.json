@@ -1,0 +1,36 @@
+{
+    "sk_1" : {
+        "sk" :"____ TCP Job name ____",
+        "variance" : [
+            ["[192.168.45.12]","[192.168.75.8]","[192.174.32.154]"],
+            ["update()","upgrade()","upload()","createaAccount()","login()","logout()"]
+        ],
+        "freq" : 60
+    },
+    "sk_2" : {
+        "sk" :"Image file of size ____ loaded in ____ seconds",
+        "variance" : [
+            ["15487","15488","20571"],
+            ["0","0.01","0.02","0.1"]
+        ],
+        "freq" : 10
+    },
+    "sk_3" : {
+        "sk" :"Image file of size ____ saved in ____ seconds",
+        "variance" : [
+            ["15487","15488","20571"],
+            ["0","0.01","0.02","0.1"]
+        ],
+        "freq" : 10
+    },
+    "sk_4" : {
+        "sk" :"Edits file ____ of size ____ edits # ____ loaded in ____ seconds",
+        "variance" : [
+            ["/tmp/hadoop-Rico/fs/ame/current/edits","/dev/tools/tmp","/scr/public/assets/css"],
+            ["1049092","5162345","7832614","03032145"],
+            ["2057","1298","1654","4598"],
+            ["0","0.01","0.02","0.1"]
+        ],
+        "freq" : 20
+    }
+}
