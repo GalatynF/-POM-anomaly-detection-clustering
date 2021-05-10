@@ -32,6 +32,9 @@ class logs:
 
 
 def choose_skeleton(data):
+    ''' Choisi un squelette aléatoirement en fonction de la frequence,
+        puis créer le log et renvoie le log créé. 
+    '''
     while True : 
         rand = str(random.randrange(1, len(data)+1))
         freq = data['sk_'+rand]['freq']
@@ -45,7 +48,7 @@ def choose_skeleton(data):
 
 
 def filling(path, f_size):
-
+    ''' Rempli le(s) fichier(s) géneré(s) avec la taille souhaité. '''
     if os.path.exists(path):
         f = open(path, 'w')
 
